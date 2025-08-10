@@ -13,13 +13,26 @@ import Carousel, {
 } from "react-native-reanimated-carousel";
 import SectionTitle from "./ui/SectionTitle";
 import { window } from "../constants/sizes";
+import useMovie from "../hooks/useMovie";
 
-const scale = 0.5;
+import {
+  configureReanimatedLogger,
+  ReanimatedLogLevel,
+} from "react-native-reanimated";
+
+configureReanimatedLogger({
+  level: ReanimatedLogLevel.warn,
+  strict: false,
+});
+
+const scale = 0.44;
 const WINDOW_WIDTH = window.width;
 const ITEM_WIDTH = WINDOW_WIDTH * scale;
 const ITEM_HEIGHT = 240 * scale;
 
 export default function MovieList() {
+  const { nowPlayingMovies } = useMovie();
+
   const progress = useSharedValue<number>(0);
   const ref = useRef<ICarouselInstance>(null);
 
@@ -66,8 +79,8 @@ export default function MovieList() {
           }}
           width={ITEM_WIDTH}
           height={ITEM_HEIGHT}
-          data={[...new Array(5).keys()]}
-          renderItem={({ index, animationValue }) => {
+          data={nowPlayingMovies.list}
+          renderItem={({ item, index, animationValue }) => {
             const maskStyle = useAnimatedStyle(() => {
               const opacity = interpolate(
                 animationValue.get(),
@@ -84,11 +97,23 @@ export default function MovieList() {
               <View key={index} style={styles.item}>
                 <Image
                   style={styles.imageContainer}
-                  source={require("../assets/images/movie1.webp")}
+                  source={{ uri: item.posterPath }}
                 />
                 <Animated.View style={[styles.details, maskStyle]}>
-                  <Text style={styles.name}>Movie {index + 1}</Text>
-                  <Text style={styles.rating}>Adventure</Text>
+                  <Text
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                    style={styles.name}
+                  >
+                    {item.title}
+                  </Text>
+                  <Text
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                    style={styles.genres}
+                  >
+                    {item.genres}
+                  </Text>
                 </Animated.View>
               </View>
             );
@@ -156,10 +181,11 @@ const styles = StyleSheet.create({
   },
   item: {
     gap: 12,
+    alignItems: "center",
   },
   imageContainer: {
+    width: "100%",
     aspectRatio: 2 / 3,
-    height: 270,
     borderRadius: 12,
   },
   details: {
@@ -170,9 +196,11 @@ const styles = StyleSheet.create({
     color: "#fefefe",
     fontSize: 18,
     fontWeight: "bold",
+    textAlign: "center",
   },
-  rating: {
+  genres: {
     color: "#919191",
     fontSize: 14,
+    textAlign: "center",
   },
 });

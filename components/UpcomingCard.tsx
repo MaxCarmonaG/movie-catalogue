@@ -3,15 +3,15 @@ import { Image, StyleSheet, Text, View } from "react-native";
 export default function UpcomingCard({
   id,
   title,
-  releaseDate,
+  year,
   posterPath,
-  genre,
+  genres,
 }: {
-  id: number;
+  id: string;
   title: string;
-  releaseDate: string;
+  year: number;
   posterPath: string;
-  genre: string;
+  genres: string;
 }) {
   return (
     <View style={styles.container}>
@@ -21,9 +21,9 @@ export default function UpcomingCard({
       />
       <View style={styles.content}>
         <Text style={styles.title}>
-          {title} ({new Date(releaseDate).getFullYear()})
+          {title} ({year})
         </Text>
-        <Text style={styles.genre}>{genre}</Text>
+        <Text style={styles.genre}>{genres}</Text>
       </View>
     </View>
   );
