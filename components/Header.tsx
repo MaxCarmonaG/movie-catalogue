@@ -4,7 +4,7 @@ export default function Header() {
   return (
     <View style={styles.container}>
       <View style={styles.saluteContainer}>
-        <Text style={styles.salute}>Welcome Max</Text>
+        <Text style={styles.salute}>Welcome Max👋</Text>
         <Text style={styles.message}>Let's relax and watch a movie.</Text>
       </View>
       <Image

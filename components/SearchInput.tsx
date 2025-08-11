@@ -2,19 +2,14 @@ import { useState } from "react";
 import { StyleSheet, TextInput } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Feather from "@expo/vector-icons/Feather";
+import BoxGradient from "./ui/BoxGradient";
 
 export default function SearchInput() {
   const [text, onChangeText] = useState("");
 
   return (
-    <LinearGradient
-      colors={["#272727", "#121212"]}
-      style={styles.gradient}
-      start={{ x: 0, y: 1 }}
-      end={{ x: 1, y: 0 }}
-    >
+    <BoxGradient style={styles.gradient}>
       <Feather name="search" size={24} color="#fefefe" />
-
       <TextInput
         style={styles.input}
         onChangeText={onChangeText}
@@ -22,7 +17,7 @@ export default function SearchInput() {
         placeholder="Search movie, cinema, genre..."
         placeholderTextColor="#919191"
       />
-    </LinearGradient>
+    </BoxGradient>
   );
 }
 

@@ -1,5 +1,5 @@
 import { useCallback, useRef } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Animated, {
   Extrapolation,
   interpolate,
@@ -13,7 +13,7 @@ import Carousel, {
 } from "react-native-reanimated-carousel";
 import SectionTitle from "./ui/SectionTitle";
 import { window } from "../constants/sizes";
-import useMovie from "../hooks/useMovie";
+import useMovies from "../hooks/useMovies";
 
 import {
   configureReanimatedLogger,
@@ -30,8 +30,12 @@ const WINDOW_WIDTH = window.width;
 const ITEM_WIDTH = WINDOW_WIDTH * scale;
 const ITEM_HEIGHT = 240 * scale;
 
-export default function MovieList() {
-  const { nowPlayingMovies } = useMovie();
+export default function MovieList({
+  onPressNavigation,
+}: {
+  onPressNavigation: (movieId: string) => void;
+}) {
+  const { nowPlayingMovies } = useMovies();
 
   const progress = useSharedValue<number>(0);
   const ref = useRef<ICarouselInstance>(null);
@@ -66,7 +70,11 @@ export default function MovieList() {
 
   return (
     <View style={styles.container}>
-      <SectionTitle title="Now Playing" hasSeeAll={true} />
+      <SectionTitle
+        title="Now Playing"
+        hasSeeAll={true}
+        style={{ marginHorizontal: 24 }}
+      />
       <View>
         <Carousel
           ref={ref}
@@ -94,7 +102,11 @@ export default function MovieList() {
             }, [animationValue]);
 
             return (
-              <View key={index} style={styles.item}>
+              <TouchableOpacity
+                key={index}
+                style={styles.item}
+                onPress={() => onPressNavigation(item.id)}
+              >
                 <Image
                   style={styles.imageContainer}
                   source={{ uri: item.posterPath }}
@@ -115,7 +127,7 @@ export default function MovieList() {
                     {item.genres}
                   </Text>
                 </Animated.View>
-              </View>
+              </TouchableOpacity>
             );
           }}
           autoPlay={false}

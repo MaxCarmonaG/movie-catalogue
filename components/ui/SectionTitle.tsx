@@ -1,14 +1,16 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, StyleProp, ViewStyle } from "react-native";
 
 export default function SectionTitle({
   title,
   hasSeeAll,
+  style,
 }: {
   title: string;
-  hasSeeAll: boolean;
+  hasSeeAll?: boolean;
+  style?: StyleProp<ViewStyle>;
 }) {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <Text style={styles.title}>{title}</Text>
       {hasSeeAll && <Text style={styles.link}>See All</Text>}
     </View>
@@ -20,7 +22,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginHorizontal: 24,
   },
   title: {
     fontSize: 20,

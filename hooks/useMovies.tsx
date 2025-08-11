@@ -25,7 +25,7 @@ type ListState<T> = {
   error: unknown | null;
 };
 
-export default function useMovie() {
+export default function useMovies() {
   const [nowPlayingMovies, setNowPlayingMovies] = useState<ListState<Movie>>({
     list: [],
     loading: true,
@@ -33,12 +33,6 @@ export default function useMovie() {
   });
 
   const [upcomingMovies, setUpcomingMovies] = useState<ListState<Movie>>({
-    list: [],
-    loading: true,
-    error: null,
-  });
-
-  const [movieGenres, setMovieGenres] = useState<ListState<Genre>>({
     list: [],
     loading: true,
     error: null,
@@ -66,7 +60,6 @@ export default function useMovie() {
         ...prev,
         list,
       }));
-      return list;
     } catch (err) {
       setter((prev) => ({
         ...prev,
@@ -88,8 +81,15 @@ export default function useMovie() {
     );
   const fetchUpcomingMovies = async () =>
     await movieFetcher<Movie>(setUpcomingMovies, getUpcomingMovies, "results");
-  const fetchMovieGenres = async () =>
-    await movieFetcher<Genre>(setMovieGenres, getMovieGenres, "genres");
+
+  const fetchMovieGenres = async () => {
+    try {
+      return (await getMovieGenres())?.genres as Genre[];
+    } catch (error) {
+      console.error("Error fetching movie genres:", error);
+    }
+    return [];
+  };
 
   const genreMapper = (
     setterArr: Dispatch<SetStateAction<ListState<Movie>>>[],
