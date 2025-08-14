@@ -1,3 +1,4 @@
-import { Dimensions, ScaledSize } from "react-native";
+const ITEM_HEIGHT = 106;
+const ITEM_WIDTH = 180;
 
-export const window: ScaledSize = Dimensions.get("screen");
+export { ITEM_HEIGHT, ITEM_WIDTH };

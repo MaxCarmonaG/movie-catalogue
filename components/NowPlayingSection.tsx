@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { use, useCallback, useRef } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Animated, {
   Extrapolation,
@@ -11,31 +11,33 @@ import Carousel, {
   Pagination,
   TAnimationStyle,
 } from "react-native-reanimated-carousel";
-import SectionTitle from "./ui/SectionTitle";
-import { window } from "../constants/sizes";
+import SectionTitle from "../ui/SectionTitle";
+import { ITEM_HEIGHT, ITEM_WIDTH } from "../constants/sizes";
 import useMovies from "../hooks/useMovies";
 
 import {
   configureReanimatedLogger,
   ReanimatedLogLevel,
 } from "react-native-reanimated";
+import useDimensions, { Orientation } from "../hooks/useDimensions";
 
 configureReanimatedLogger({
   level: ReanimatedLogLevel.warn,
   strict: false,
 });
 
-const scale = 0.44;
-const WINDOW_WIDTH = window.width;
-const ITEM_WIDTH = WINDOW_WIDTH * scale;
-const ITEM_HEIGHT = 240 * scale;
-
 export default function MovieList({
   onPressNavigation,
 }: {
   onPressNavigation: (movieId: string) => void;
 }) {
+  const { height, width, orientation } = useDimensions();
   const { nowPlayingMovies } = useMovies();
+
+  const carouselHeight = {
+    [Orientation.Portrait]: height * 0.38,
+    [Orientation.Landscape]: height * 0.85,
+  }[orientation];
 
   const progress = useSharedValue<number>(0);
   const ref = useRef<ICarouselInstance>(null);
@@ -52,11 +54,7 @@ export default function MovieList({
 
     const zIndex = Math.round(interpolate(value, [-1, 0, 1], [10, 20, 30]));
     const rotateZ = `${interpolate(value, [-1, 0, 1], [-5, 0, 5])}deg`;
-    const translateX = interpolate(
-      value,
-      [-1, 0, 1],
-      [-WINDOW_WIDTH * 0.52, 0, WINDOW_WIDTH * 0.52]
-    );
+    const translateX = interpolate(value, [-1, 0, 1], [-214, 0, 214]);
 
     const translateY = interpolate(value, [-1, 0, 1], [10, 0, 10]);
     const opacity = interpolate(value, [-1, 0, 1], [0.5, 1, 0.5]);
@@ -81,8 +79,8 @@ export default function MovieList({
           loop
           onProgressChange={(_, val) => progress.set(val)}
           style={{
-            width: window.width,
-            height: 348,
+            width: width,
+            height: carouselHeight,
             justifyContent: "center",
           }}
           width={ITEM_WIDTH}

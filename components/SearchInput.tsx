@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { StyleSheet, TextInput } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import Feather from "@expo/vector-icons/Feather";
-import BoxGradient from "./ui/BoxGradient";
+import BoxGradient from "../ui/BoxGradient";
 
 export default function SearchInput() {
   const [text, onChangeText] = useState("");

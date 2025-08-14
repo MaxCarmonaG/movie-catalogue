@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import BoxGradient from "./ui/BoxGradient";
+import BoxGradient from "../ui/BoxGradient";
 
 export default function DetailsCard({
   title,

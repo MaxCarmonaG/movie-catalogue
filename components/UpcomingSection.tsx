@@ -1,7 +1,8 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import SectionTitle from "./ui/SectionTitle";
+import SectionTitle from "../ui/SectionTitle";
 import UpcomingCard from "./UpcomingCard";
 import useMovies from "../hooks/useMovies";
+import useDimensions, { Orientation } from "../hooks/useDimensions";
 
 export default function UpcomingSection({
   onPressNavigation,
@@ -9,13 +10,24 @@ export default function UpcomingSection({
   onPressNavigation: (movieId: string) => void;
 }) {
   const { upcomingMovies } = useMovies();
+  const { width, orientation } = useDimensions();
+
+  const itemWidth = {
+    [Orientation.Portrait]: null,
+    [Orientation.Landscape]:
+      (width - 2 * styles.container.paddingHorizontal - styles.list.gap) / 2,
+  }[orientation];
 
   return (
     <View style={styles.container}>
       <SectionTitle title="Coming Soon" hasSeeAll={true} />
-      <View style={styles.list}>
+      <View style={{ ...styles.list, ...(itemWidth ? styles.grid : {}) }}>
         {upcomingMovies.list.map(({ id, title, year, posterPath, genres }) => (
-          <TouchableOpacity key={id} onPress={() => onPressNavigation(id)}>
+          <TouchableOpacity
+            key={id}
+            onPress={() => onPressNavigation(id)}
+            style={{ width: itemWidth }}
+          >
             <UpcomingCard
               id={id}
               title={title}
@@ -43,5 +55,9 @@ const styles = StyleSheet.create({
   list: {
     gap: 16,
     paddingVertical: 16,
+  },
+  grid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
 });

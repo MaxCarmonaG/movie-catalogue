@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 import { Actor } from "../api/tmdb";
-import SectionTitle from "./ui/SectionTitle";
+import SectionTitle from "../ui/SectionTitle";
 
 export default function CastSection({ cast }: { cast: Actor[] }) {
   return (

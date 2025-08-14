@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import SectionTitle from "./ui/SectionTitle";
+import SectionTitle from "../ui/SectionTitle";
 import ReadMore from "@fawazahmed/react-native-read-more";
 
 export default function SynopsisSection({ synopsis }: { synopsis: string }) {
@@ -13,6 +13,7 @@ export default function SynopsisSection({ synopsis }: { synopsis: string }) {
         seeLessText="Read Less"
         seeMoreStyle={styles.readMore}
         seeLessStyle={styles.readMore}
+        animate={false}
       >
         {synopsis}
       </ReadMore>

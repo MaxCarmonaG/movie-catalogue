@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, View } from "react-native";
-import SectionTitle from "./ui/SectionTitle";
+import SectionTitle from "../ui/SectionTitle";
 
 export default function CinemaSection({
   cinemas,
