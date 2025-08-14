@@ -4,7 +4,7 @@ A React Native mobile app built with Expo for browsing and exploring movies from
 
 ## Getting Started
 
-First, add your env variables in a `env.local` file
+First, add your TMDB API Key to a env variables in a `env.local` file. You can you use and replace variables the `env.local.template` 
 
 
 Next, run the development server:
