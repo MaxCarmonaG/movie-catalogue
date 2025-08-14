@@ -1,4 +1,4 @@
-import { use, useCallback, useRef } from "react";
+import { useCallback, useRef } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Animated, {
   Extrapolation,
@@ -55,7 +55,6 @@ export default function MovieList({
     const zIndex = Math.round(interpolate(value, [-1, 0, 1], [10, 20, 30]));
     const rotateZ = `${interpolate(value, [-1, 0, 1], [-5, 0, 5])}deg`;
     const translateX = interpolate(value, [-1, 0, 1], [-214, 0, 214]);
-
     const translateY = interpolate(value, [-1, 0, 1], [10, 0, 10]);
     const opacity = interpolate(value, [-1, 0, 1], [0.5, 1, 0.5]);
 

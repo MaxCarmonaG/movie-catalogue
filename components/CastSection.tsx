@@ -1,13 +1,6 @@
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import { Actor } from "../api/tmdb";
+import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import SectionTitle from "../ui/SectionTitle";
+import { Actor } from "../types";
 
 export default function CastSection({ cast }: { cast: Actor[] }) {
   return (

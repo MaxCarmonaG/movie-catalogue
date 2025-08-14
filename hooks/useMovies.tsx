@@ -4,26 +4,7 @@ import {
   getNowPlayingMovies,
   getUpcomingMovies,
 } from "../api/tmdb";
-
-type Movie = {
-  id: string;
-  title: string;
-  genre_ids: string[];
-  genres: string;
-  year: number;
-  posterPath: string;
-};
-
-type Genre = {
-  id: string;
-  name: string;
-};
-
-type ListState<T> = {
-  list: T[];
-  loading: boolean;
-  error: unknown | null;
-};
+import { Genre, ListState, Movie } from "../types";
 
 export default function useMovies() {
   const [nowPlayingMovies, setNowPlayingMovies] = useState<ListState<Movie>>({
@@ -84,7 +65,7 @@ export default function useMovies() {
 
   const fetchMovieGenres = async () => {
     try {
-      return (await getMovieGenres())?.genres as Genre[];
+      return (await getMovieGenres())?.genres;
     } catch (error) {
       console.error("Error fetching movie genres:", error);
     }
